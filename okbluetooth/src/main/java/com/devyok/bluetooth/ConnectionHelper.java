@@ -38,9 +38,9 @@ import com.devyok.bluetooth.hfp.HeadsetProfileService;
 import com.devyok.bluetooth.spp.SPPConnectionSecurePolicy;
 import com.devyok.bluetooth.utils.BluetoothUtils;
 /**
- * ����ά�������豸���������(SCO/HFP/SPP) <br>
- * ִ���ߣ�{@link ConnectionProcessor}   <br>
- * �ύ�ߣ�{@link ConnectionHelper#buildBluetoothConnection()} <br>
+ * 负责维护蓝牙设备间相关连接(SCO/HFP/SPP) <br>
+ * 执行者：{@link ConnectionProcessor}   <br>
+ * 提交者：{@link ConnectionHelper#buildBluetoothConnection()} <br>
  * @author wei.deng
  */
 class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener , 
@@ -55,23 +55,23 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	
 	
 	/**
-	 * ������Ҫ���Խ���SCO|HFP|SPP���ӵ�������Ҫ�ύ���˶�����
+	 * 所有需要尝试建立SCO|HFP|SPP连接的任务都需要提交到此队列中
 	 */
 	final TaskQueue connectionTaskQueue;
 	/**
-	 * ����۲�SCO|HFP|SPP���ӵ���ȷ��
+	 * 负责观察SCO|HFP|SPP连接的正确性
 	 */
 	final TaskQueue watchDogQueue;
 	
 	final TaskQueue connectionBuilderQueue;
 	
 	/**
-	 * �������豸��� HFP ����
+	 * 与蓝牙设备间的 HFP 连接
 	 */
 	Connection hfpConnection;
 	/**
-	 * �������豸��� SPP ����
-	 * ע�⣺�����豸�ڽ�������ʱ�����֮ǰ�ѽ���������Ҫ�ȶϿ� {@link Connection#disconnect()}
+	 * 与蓝牙设备间的 SPP 连接
+	 * 注意：部分设备在建立连接时，如果之前已建立，则需要先断开 {@link Connection#disconnect()}
 	 */
 	Connection sppConnection;
 	
@@ -81,25 +81,25 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 		return sDefault;
 	}
 	/**
-	 * ������Ҫ���Խ���SCO|HFP|SPP���ӵ�������Ҫ�ӳ�2S�������
-	 * ��ϵͳSCO|HFP��ʱʱ����ͬ
+	 * 所有需要尝试建立SCO|HFP|SPP连接的任务都需要延迟2S进入队列
+	 * 与系统SCO|HFP超时时间相同
 	 */
 	static final long TRY_BUILD_CONNECTION_DELAY_TIME = 2*1000;
 	/**
-	 * ��ϵͳ��ʱʱ����ͬ,sco��ʱʱ��(scoһֱͣ����connecting״̬)
+	 * 与系统超时时间相同,sco超时时间(sco一直停留在connecting状态)
 	 */
 	static final long SCO_AUDIO_CONNECT_TIMEOUT = 3*1000;
 	
 	/**
-	 * ����HFP���ӳ�ʱʱ��
+	 * 建立HFP连接超时时间
 	 */
 	static final long HFP_CONNECTION_TIMEOUT = 2*1000;
 	/**
-	 * ����SPP���ӳ�ʱʱ��
+	 * 建立SPP连接超时时间
 	 */
 	static final long SPP_CONNECTION_TIMEOUT = 3*1000;
 	/**
-	 * ����SCO�����쳣,����һֱ����{@link BluetoothProfile#STATE_CONNECTING}
+	 * 建立SCO连接异常,连接一直处于{@link BluetoothProfile#STATE_CONNECTING}
 	 */
 	private Runnable scoConnectionExceptionTask = BluetoothUtils.EMPTY_TASK;
 	
@@ -114,8 +114,8 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	}
 
 	/**
-	 * ��Ӧ�õ�һ��������������������ɹ���ᴥ��
-	 * ��ϵͳ�����ӹر�->�򿪺󴥷�
+	 * 当应用第一次启动并连接蓝牙服务成功后会触发
+	 * 当系统蓝牙从关闭->打开后触发
 	 */
 	@Override
 	public void onServiceReady(int profile, BluetoothProfileService service) {
@@ -157,7 +157,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	}
 
 	/**
-	 * ϵͳHFP�ѽ�������
+	 * 系统HFP已建立连接
 	 */
 	@Override
 	public void onConnected(int profile, int newState, int preState,BluetoothDevice bluetoothDevice) {
@@ -167,7 +167,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	}
 
 	/**
-	 * ϵͳHFP���ӶϿ�
+	 * 系统HFP连接断开
 	 */
 	@Override
 	public void onDisconnected(int profile, int newState, int preState,
@@ -185,12 +185,12 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 		buildConnection(event, protocol,bluetoothDevice,TRY_BUILD_CONNECTION_DELAY_TIME,AudioDevice.SBP);
 	}
 	/**
-	 * ���Թ���SCO|HFP|SPP������,��AudioDeivceΪUNKNOW,���ݵ�ǰ�ն��豸�����ӵ���Ƶ�豸�����ȼ�������
+	 * 尝试构建SCO|HFP|SPP等连接,但AudioDeivce为UNKNOW,根据当前终端设备所连接的音频设备的优先级来决定
 	 * 
 	 * @param event
 	 * @param protocol
 	 * @param bluetoothDevice
-	 * @param delay �ӳٶ೤ʱ�俪ʼ����
+	 * @param delay 延迟多长时间开始连接
 	 * @param audioDevice
 	 */
 	private void buildConnection(Event event,Protocol protocol,BluetoothDevice bluetoothDevice,long delay,AudioDevice audioDevice){
@@ -267,17 +267,17 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	}
 	
 	/**
-	 * ������SCO/HFP/SPP,ͬʱ���Իָ��뵱ǰ�豸�����������Ƶ״̬<br>
+	 * 负责建立SCO/HFP/SPP,同时尝试恢复与当前设备环境相符的音频状态<br>
 	 * 
-	 * <p>Ϊʲô���Թ��췽�����ݵ������豸����Ϊ׼������HFP��SPP���ӣ�</p>
-	 * ����ConnectionProcessor��������A2dp��ڣ�����<br>
-	 * ��A�豸��HFP���ӽ����ɹ�֮���ӳ��ύ���񵽶��У�����ʱB�豸��A2dp���룬�ὫHFP��������Ӷ������Ƴ�<br>
-	 * ����Թ��췽�����豸Ϊ׼����ô�������B�豸������HFP��SPP�����B��֧��SPP��HFP,���޷�������
-	 * ���Ǵ�ʱ֧��HFP��SPP��A�豸�Ѿ�����.<br>
+	 * <p>为什么不以构造方法传递的蓝牙设备对象为准来构建HFP与SPP连接？</p>
+	 * 由于ConnectionProcessor接收来自A2dp入口，所以<br>
+	 * 当A设备的HFP连接建立成功之后延迟提交任务到队列，而此时B设备的A2dp进入，会将HFP连接任务从队列中移除<br>
+	 * 如果以构造方法的设备为准，那么将会根据B设备来建立HFP与SPP，如果B不支持SPP或HFP,则将无法建立。
+	 * 但是此时支持HFP与SPP的A设备已经连接.<br>
 	 * 
-	 * <p>��������Ƕ������豸�����л�����</p>
+	 * <p>以上情况是多蓝牙设备间多次切换导致</p>
 	 * 
-	 * �����κ�һ��Э�����ӽ������֮�󣬶�ʵʱȥ��ȡ��ǰ�ն������������֤HFP��SPP���ӵ���ȷ������<br>
+	 * 所以任何一个协议连接建立完成之后，都实时去获取当前终端连接情况，保证HFP与SPP连接的正确创建。<br>
 	 * 
 	 * @author wei.deng
 	 */
@@ -303,7 +303,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 				
 				if(AudioDevice.SBP == audioDevice){
 					
-					//�����ն˵�ǰ�����ӵ���Ƶ�豸���ȼ����������ĸ���Ƶ�豸
+					//根据终端当前已连接的音频设备优先级来决定走哪个音频设备
 					tryConnect(interceptor);
 					
 				} else if(AudioDevice.SPEAKER == audioDevice){
@@ -335,7 +335,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 		}
 		
 		private void tryConnect(Interceptor interceptor){
-			if(OkBluetooth.isPhoneCalling()){ //ϵͳ�绰�Ƿ�������
+			if(OkBluetooth.isPhoneCalling()){ //系统电话是否连接中
 				
 				if(interceptor.systemPhoneCalling()){
 					Log.i(TAG, "SystemEvent intercepted");
@@ -347,15 +347,15 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 				if(OkBluetooth.hasForcePhoneRing() && OkBluetooth.hasForcePhoneIncall() && OkBluetooth.isBluetoothEnable() && OkBluetooth.HFP.hasConnectedDevice()) {
 					tryConnectSco();
 				}
-			} else if(OkBluetooth.isBluetoothEnable() && OkBluetooth.HFP.hasConnectedDevice()){ //�Ƿ���ڿ��õ������豸
+			} else if(OkBluetooth.isBluetoothEnable() && OkBluetooth.HFP.hasConnectedDevice()){ //是否存在可用的蓝牙设备
 				
 				tryConnectBluetooth(interceptor);
 				
-			} else if(OkBluetooth.isWiredHeadsetOn()){ //���߶����Ƿ����
+			} else if(OkBluetooth.isWiredHeadsetOn()){ //有线耳机是否插入
 				
 				tryConnectWiredHeadset();
 				
-			}  else {  //�����豸����
+			}  else {  //正常设备环境
 				
 				tryConnectSpeaker();
 			}
@@ -380,7 +380,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 					
 					tryConnectHfp(bluetoothDevice);
 					
-					//����SPP���ӿ�����Ҫ����һЩʱ��,ʧ�ܺ���������������ϵͳHFP���Ӻ���SPP����
+					//建立SPP连接可能需要花费一些时间,失败后会进行重连或重启系统HFP连接后建立SPP连接
 					tryConnectSpp(bluetoothDevice);
 					
 					sLastConnectBluetoothDevice = bluetoothDevice;
@@ -544,10 +544,10 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 			return false;
 		}
 		/**
-		 * ���ԶϿ�ϵͳHFP���ӽ��лָ�<br>
-		 * ʲô����³����������?<br>
-		 * ��SPP����ά����socket���ִ����ڽ���һ���µ�����ʱû����ȷ�Ͽ��ϴ����ӣ����ܻᵼ�µ�ǰ���ӽ���ʧ��,��һ�ֲ��ȷ�����<br>
-		 * ͬʱ���Իָ�SPP��Ҫͬ���ڵ�ǰ���������ɣ�ʹ��������õ���ȷ��״̬<br>
+		 * 尝试断开系统HFP连接进行恢复<br>
+		 * 什么情况下出现这种情况?<br>
+		 * 当SPP连接维护的socket出现错误，在建立一次新的连接时没有正确断开上次连接，可能会导致当前连接建立失败,是一种补救方法。<br>
+		 * 同时尝试恢复SPP需要同步在当前任务队列完成，使后续任务得到正确的状态<br>
 		 * @param device
 		 */
 		private void rebuildHfpConnection(final BluetoothDevice device){
@@ -655,10 +655,10 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 			BluetoothUtils.dumpBluetoothDevice(TAG, bluetoothDevice);
 			Log.i(TAG, "buildBluetoothConnection event = "+ event +", delay time = " + delay + " , param userTouch " + audioDevice + " , pre userTouch " + gUserTouchConnectAudioDevice + " , protocol = " + protocol);
 			
-			//Ϊʲô����Ҫ����A2dp��profile���ӣ�
-			//�����ǰ�豸��������ģʽ�¼���speaker����������A2dp���ӳɹ���,A2dp����,��ô���������豸,���Ե�A2dp���ӳɹ�֮��,Ҳ��Ҫ�����Ƶ���Ӳ��ر�A2dp
+			//为什么还需要处理A2dp的profile连接？
+			//如果当前设备处于正常模式下即：speaker开启，而当A2dp连接成功后,A2dp开启,那么会走蓝牙设备,所以当A2dp连接成功之后,也需要检查音频连接并关闭A2dp
 			
-			if(Protocol.HFP == protocol || Protocol.A2DP == protocol) {
+			if(BluetoothConnection.Protocol.HFP == protocol || BluetoothConnection.Protocol.A2DP == protocol) {
 				
 				switch (event) {
 				case A2DP_CONNECTED:
@@ -693,7 +693,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	
 	
 	/**
-	 * ���¶���Ϊ����������Ƶ����({@link ConnectionHelper#buildBluetoothConnection()})���¼�
+	 * 以下定义为触发构建音频连接({@link ConnectionHelper#buildBluetoothConnection()})的事件
 	 * @author wei.deng
 	 */
 	public enum Event {
@@ -701,28 +701,28 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 		UNKNOW,
 		
 		/**
-		 * ��HFP���ӳɹ�֮��ͨ�����¼��Ķ��忪ʼ����������Ƶ
+		 * 当HFP连接成功之后，通过此事件的定义开始触发构建音频
 		 */
 		HFP_CONNECTED,
 		HFP_DISCONNECTED,
 		A2DP_CONNECTED,
 		A2DP_DISCONNECTED,
 		/**
-		 * ��ϵͳ�绰״̬��INCALL -> IDLEʱ
+		 * 当系统电话状态从INCALL -> IDLE时
 		 */
 		PHONECALL_INCALL_TO_IDLE,
 		/**
-		 * �����Ƶ״̬
+		 * 检测音频状态
 		 */
 		WATCH_DOG,
 		/**
-		 * �û�ͨ��UI���������л���Ƶ�豸
+		 * 用户通过UI主动触发切换音频设备
 		 */
 		USER_INTERFACE,
 		USER_INTERFACE_QUIT,
 		HEADSET_OR_OTHERDEVICE_RECOVERY,
 		/**
-		 * sco �Ͽ�
+		 * sco 断开
 		 */
 		SCO_DISCONNECTED,
 		PHONECALL_SCO_DISCONNECTED
@@ -778,7 +778,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 	}
 	
 	/**
-	 * sco һֱ����{@link BluetoothHeadset#STATE_AUDIO_CONNECTING}״̬�£�����Ϊ�����쳣
+	 * sco 一直处于{@link BluetoothHeadset#STATE_AUDIO_CONNECTING}状态下，则认为发生异常
 	 * @author wei.deng
 	 */
 	class ScoConnectionExceptionTask extends AbstractExceptionTask {
@@ -815,7 +815,7 @@ class ConnectionHelper implements BluetoothProfileConnectionStateChangedListener
 							
 							connectionTaskQueue.removeAllTasks();
 							
-							//�ڵ�ǰ�����߳�(ConnectionThread)��������(�Ƴ���������)����֤��ǰ�߳������̶߳��е��������������ȷ��ȡ����״̬
+							//在当前任务线程(ConnectionThread)阻塞运行(推迟所有任务)，保证当前线程所在线程队列的其他任务可以正确获取蓝牙状态
 							
 							while(!isStop && OkBluetooth.isBluetoothEnable()){
 								Log.i(TAG, "start recovery#2 disableBluetooth");
