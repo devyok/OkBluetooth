@@ -4,3 +4,11 @@
 # OkBluetooth
 Android蓝牙音频及消息通信框架
 
+
+
+
+
+## License ##
+ServiceManager is released under the [Apache 2.0 license](https://github.com/devyok/OkBluetooth/blob/master/LICENSE).
+
+Copyright (C) 2018 DengWei.
