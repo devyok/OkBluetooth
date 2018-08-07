@@ -51,7 +51,7 @@ import com.devyok.bluetooth.sco.BluetoothSCOService;
 import com.devyok.bluetooth.spp.SPPBluetoothMessageParser;
 import com.devyok.bluetooth.utils.BluetoothUtils;
 /**
- * �ṩ����ʹ��������֧�ֵķ���<p>
+ * 提供所有使用蓝牙所支持的服务<p>
  * 1. {@link HeadsetProfileService}<br>
  * 2. {@link A2dpProfileService}<br>
  * 3. {@link BluetoothAdapterService}<br>
@@ -64,15 +64,15 @@ public final class OkBluetooth extends BluetoothService{
 	static final String TAG = OkBluetooth.class.getSimpleName();
 	
 	/**
-	 * ϵͳ�绰����ʱǿ�Ƴ���ʹ������
+	 * 系统电话来电时强制尝试使用蓝牙
 	 */
 	public static final int FORCE_TYPE_PHONE_RING = 0x001;
 	/**
-	 * ϵͳ�绰ͨ����ǿ�Ƴ���ʹ������
+	 * 系统电话通话中强制尝试使用蓝牙
 	 */
 	public static final int FORCE_TYPE_PHONE_INCALL = 0x002;
 	/**
-	 * ϵͳ�绰ͨ����Ҷ�ǿ�Ƴ���ʹ������
+	 * 系统电话通话后挂断强制尝试使用蓝牙
 	 */
 	public static final int FORCE_TYPE_PHONE_INCALL_TO_IDLE = 0x004;
 	
@@ -91,7 +91,7 @@ public final class OkBluetooth extends BluetoothService{
 	private Interceptor mInterceptor = Interceptor.EMPTY;
 	
 	/**
-	 * ����HFP|SPP���ӵ�״̬
+	 * 监听HFP|SPP连接的状态
 	 */
 	private BluetoothProtocolConnectionStateListener mProtocolConnectionStateListener = BluetoothProtocolConnectionStateListener.EMTPY;
 	private static SPPBluetoothMessageParser<?> sSppBluetoothMessageParser = SPPBluetoothMessageParser.DEFAULT; 
@@ -310,7 +310,7 @@ public final class OkBluetooth extends BluetoothService{
 	}
 	
 	/**
-	 * ��ȡ��������Ե��豸
+	 * 获取所有已配对的设备
 	 * @return
 	 */
 	public static Set<BluetoothDevice> getBondedDevices(){
@@ -326,7 +326,7 @@ public final class OkBluetooth extends BluetoothService{
 		return BluetoothUuid.containsAnyUuid(parcelUuid, new ParcelUuid[]{new ParcelUuid(BluetoothConnection.DEFAULT_UUID)});
 	}
 	
-	//ý����Ƶ
+	//媒体音频
 	public static boolean isSupportA2DP(BluetoothDevice bluetoothDevice){
 		
 		if(bluetoothDevice == null) return false;
@@ -336,7 +336,7 @@ public final class OkBluetooth extends BluetoothService{
 		return BluetoothUuid.containsAnyUuid(parcelUuid, A2dpProfileService.SINK_UUIDS);
 	}
 	
-	//�ֻ���Ƶ
+	//手机音频
 	public static boolean isSupportHFP(BluetoothDevice bluetoothDevice){
 		
 		if(bluetoothDevice == null) return false;
@@ -346,7 +346,7 @@ public final class OkBluetooth extends BluetoothService{
 		return BluetoothUuid.containsAnyUuid(parcelUuid, HeadsetProfileService.UUIDS);
 	}
 	
-	//�Ƿ�ͬʱ֧��ý�����ֻ���Ƶ
+	//是否同时支持媒体与手机音频
 	public static boolean isSupportHFPAndA2DP(BluetoothDevice bluetoothDevice){
 		
 		if(bluetoothDevice == null) return false;
@@ -458,14 +458,14 @@ public final class OkBluetooth extends BluetoothService{
 		}
 		
 		/**
-		 * ǿ��ϵͳHFP�������ӣ�������ͬ����ϵͳ�����й�ѡ�ֻ���Ƶ��ѡ���Ч��
-		 * �ڵ�������֮ǰ��������{@link OkBluetooth#disconnect(BluetoothDevice)},Ȼ����ִ�С�
+		 * 强制系统HFP进行连接，基本等同于在系统设置中勾选手机音频复选框的效果
+		 * 在调用连接之前，建议先{@link OkBluetooth#disconnect(BluetoothDevice)},然后在执行。
 		 */
 		public static boolean connect(final BluetoothDevice device){
 			return OkBluetooth.connect(HeadsetProfileService.PROFILE,device);
 		}
 		/**
-		 * ǿ�ƽ�ϵͳHFP���ӶϿ���������ͬ����ϵͳ������ȡ���ֻ���Ƶ��ѡ���Ч��
+		 * 强制将系统HFP连接断开，基本等同于在系统设置中取消手机音频复选框的效果
 		 */
 		public static boolean disconnect(final BluetoothDevice device){
 			return OkBluetooth.disconnect(HeadsetProfileService.PROFILE,device);
@@ -578,7 +578,7 @@ public final class OkBluetooth extends BluetoothService{
 	
 	public static class A2DP {
 		/**
-		 * ǿ�ƽ�ϵͳA2DP���ӶϿ���������ͬ����ϵͳ������ȡ��ý����Ƶ��ѡ���Ч��
+		 * 强制将系统A2DP连接断开，基本等同于在系统设置中取消媒体音频复选框的效果
 		 */
 		public static boolean disconnect(final BluetoothDevice device){
 			return getBluetoothProfileService(A2dpProfileService.PROFILE).disconnect(device);
@@ -622,14 +622,14 @@ public final class OkBluetooth extends BluetoothService{
 	}
 	
 	/**
-	 * ������
+	 * 打开蓝牙
 	 */
 	public static void enableBluetooth(){
 		getInstance().mBluetoothAdapterService.enable();
 	}
 	/**
-	 * ϵͳ���������Ƿ��
-	 * @return true:��
+	 * 系统蓝牙开关是否打开
+	 * @return true:打开
 	 */
 	public static boolean isBluetoothEnable(){
 		return getInstance().mBluetoothAdapterService.isEnable();
@@ -690,7 +690,7 @@ public final class OkBluetooth extends BluetoothService{
 				case CONNECTED_NO_MEDIA:
 				case CONNECTED_NO_PHONE_AND_MEIDA:
 					if(OkBluetooth.isSupportHFP(connectedBluetoothDevice)){
-						HFP.disconnect(connectedBluetoothDevice);
+						OkBluetooth.HFP.disconnect(connectedBluetoothDevice);
 					}
 					if(OkBluetooth.isSupportA2DP(connectedBluetoothDevice)){
 						OkBluetooth.disconnect(A2dpProfileService.PROFILE, connectedBluetoothDevice);
@@ -709,8 +709,8 @@ public final class OkBluetooth extends BluetoothService{
 		
 		List<BluetoothDevice> bluetoothDevices = getConnectedBluetoothDeviceList(profiles);
 		
-		//��ȡ֧��headset��a2dp�����������ӵ��豸
-		//headset���豸����ֻ�ܻ�ȡһ������Ϊ��ǰֻ����һ���������ڵ�������״̬�����඼��CONNECTED_NO_PHONE״̬
+		//获取支持headset与a2dp的所有已连接的设备
+		//headset的设备可能只能获取一个，因为当前只能有一个处于正在的已连接状态，其余都是CONNECTED_NO_PHONE状态
 		
 		try {
 			LinkedHashMap<BluetoothDevice,ProfileConnectionState> result = new LinkedHashMap<BluetoothDevice,ProfileConnectionState>();
@@ -772,7 +772,7 @@ public final class OkBluetooth extends BluetoothService{
 						
 						boolean isAudioConnected = bluetoothHeadset.isAudioConnected(bluetoothDevice);
 						
-						//android 4.1 �����������������Ҫ����
+						//android 4.1 不存在这个方法，需要适配
 						boolean isAudioOn = bluetoothHeadset.isAudioOn();
 						
 						Log.i(TAG, "isAudioConnected = " + isAudioConnected + " , scoStateString = " + scoStateString + " , isAudioOn = " + isAudioOn);
@@ -892,7 +892,7 @@ public final class OkBluetooth extends BluetoothService{
 	}
 
 	public static boolean isBluetoothAvailable() {
-		return HFP.hasConnectedDevice();
+		return OkBluetooth.HFP.hasConnectedDevice();
 	}
 
 	public static void tryRecoveryAudioConnection(){
@@ -924,22 +924,22 @@ public final class OkBluetooth extends BluetoothService{
 	
 	public enum ConnectionMode {
 		/**
-		 * ֻҪ�����������豸,�����������豸
+		 * 只要连接上蓝牙设备,将仅走蓝牙设备
 		 */
 		BLUETOOTH_ONLY,
 		/**
-		 * �������������豸֮��,�����������豸(����|������|��Ͳ)
+		 * 在连接上蓝牙设备之后,可以走三种设备(蓝牙|扬声器|听筒)
 		 */
 		BLUETOOTH_WIREDHEADSET_SPEAKER
 		
 	}
 	
 	public interface Callback2<Key,Value> {
-		public void callback(Key k, Value v);
+		public void callback(Key k , Value v);
 	}
 	
 	/**
-	 * ��HFP|SPP���ӶϿ�����������ʱ֪ͨ�ͻ���,ͨ��{@link Protocol}��������
+	 * 当HFP|SPP连接断开或者已连接时通知客户端,通过{@link Protocol}区分类型
 	 * @author wei.deng
 	 *
 	 */
@@ -953,7 +953,7 @@ public final class OkBluetooth extends BluetoothService{
 	}
 	
 	/**
-	 * ������
+	 * 拦截器
 	 * @author wei.deng
 	 */
 	public static abstract class Interceptor {
@@ -966,7 +966,7 @@ public final class OkBluetooth extends BluetoothService{
 		}
 		
 		/**
-		 * ϵͳ�绰��
+		 * 系统电话中
 		 * @return
 		 */
 		public boolean systemPhoneCalling(){
@@ -978,7 +978,7 @@ public final class OkBluetooth extends BluetoothService{
 		}
 		
 		/**
-		 * ������Ƶ�豸֮ǰ
+		 * 连接音频设备之前
 		 */
 		public boolean beforeConnect(AudioDevice audioDevice){
 			return false;
