@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="okbt_audiodevice_speaker">扬声器</string>
+    <string name="okbt_audiodevice_earphone">听筒</string>
+    <string name="okbt_audiodevice_bluetooth">蓝牙设备</string>
+
+</resources>

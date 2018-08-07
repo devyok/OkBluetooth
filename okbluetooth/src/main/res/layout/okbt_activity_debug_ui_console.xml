@@ -1,0 +1,443 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <Button
+        android:id="@+id/okbt_output_bt_infos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="输出蓝牙信息" />
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+	        android:id="@+id/okbt_socket_connect"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="建立spp连接" />
+
+        <Button
+	        android:id="@+id/okbt_socket_disconnect"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="断开spp连接" />
+    </LinearLayout>
+    
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_hfp_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="建立hfp连接" />
+
+        <Button
+            android:id="@+id/okbt_hfp_disconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="断开hfp连接" />
+    </LinearLayout>
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_set_stream_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set STREAM_MUSIC" />
+
+        <Button
+            android:id="@+id/okbt_set_stream_voice_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VOICE_CALL" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_set_dtmf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set DTMF" />
+
+        <Button
+            android:id="@+id/okbt_set_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SYSTEM" />
+        
+        <Button
+            android:id="@+id/okbt_set_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SCO" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_music_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放" />
+
+        <Button
+            android:id="@+id/okbt_music_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂停" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_quit_user_interface_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出用户点击" />
+        
+        <Button
+            android:id="@+id/okbt_audio_device_list_dlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="音频设备列表" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_start_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HFP Service 开启SCO" />
+
+        <Button
+            android:id="@+id/okbt_stop_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止SCO" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_start_audiomanager_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AudioManager 开启SCO" />
+
+        <Button
+            android:id="@+id/okbt_stop_audiomanager_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止SCO" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_on_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ON SCO" />
+
+        <Button
+            android:id="@+id/okbt_off_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OFF SCO" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_on_a2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启A2dp" />
+
+        <Button
+            android:id="@+id/okbt_off_a2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止A2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/okbt_set_audio_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="set NORMAL" />
+
+            <Button
+                android:id="@+id/okbt_set_audio_in_commu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="set COMMU" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/okbt_set_audio_in_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="set CALL" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/okbt_open_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打开喇叭" />
+
+        <Button
+            android:id="@+id/okbt_close_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭喇叭" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_connect_system_hfp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="建立系统HFP连接" />
+
+        <Button
+            android:id="@+id/okbt_disconnect_system_hfp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="断开系统HFP连接" />
+        
+        <Button
+            android:id="@+id/okbt_restart_system_hfp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="重启系统HFP连接(当connected_no_phone状态)" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_connect_system_hfp_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="建立系统HFP音频连接(SCO)" />
+
+        <Button
+            android:id="@+id/okbt_disconnect_system_hfp_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="断开系统HFP音频连接(SCO)" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_connect_system_a2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="建立系统A2DP连接" />
+
+        <Button
+            android:id="@+id/okbt_disconnect_system_a2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="断开系统A2DP连接" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_connect_system_a2dp_by_androidapi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调用系统接口连接A2DP" />
+
+        <Button
+            android:id="@+id/okbt_disconnect_system_a2dp_by_androidapi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调用系统接口断开A2DP" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_set_pri_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置A2DP优先级为自动连接" />
+
+        <Button
+            android:id="@+id/okbt_set_pri_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置A2DP优先级为仅打开" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_inc_bt_volumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="增加蓝牙音量" />
+
+        <Button
+            android:id="@+id/okbt_des_bt_volumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="减少蓝牙音量" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_inc_system_volumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="增加系统音量" />
+
+        <Button
+            android:id="@+id/okbt_des_system_volumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="减少系统音量" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_check_and_recovery_bt_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="检测并恢复蓝牙连接" />
+
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_request_audio_focus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请求音频焦点" />
+
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/okbt_start_watch_dog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="启动 watch dog" />
+
+        
+    </LinearLayout>
+    
+</LinearLayout>
+</ScrollView>

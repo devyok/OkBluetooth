@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView 
+        android:id="@+id/okbt_audiodevice_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="10dip"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:text=""/>
+    
+</LinearLayout>

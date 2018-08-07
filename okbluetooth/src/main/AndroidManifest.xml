@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.devyok.okbluetooth">
+
+
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+<application android:allowBackup="true">
+
+    <activity android:name="com.devyok.bluetooth.debug.DebugUIConsoleActivity" android:launchMode="singleTask"
+        >
+        <intent-filter>
+            <action android:name="com.devyok.DEBUG_UI_CONSOLE_IMPL" />
+        </intent-filter>
+    </activity>
+
+    <receiver android:name="com.devyok.bluetooth.debug.DebugHelper">
+        <intent-filter>
+            <action android:name="com.devyok.DEBUG_SYSTEM_BLUETOOTH_INFO" />
+            <action android:name="com.devyok.DEBUG_UI_CONSOLE" />
+        </intent-filter>
+    </receiver>
+</application>
+
+</manifest>
