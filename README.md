@@ -9,6 +9,12 @@ Android蓝牙音频及消息通信框架
 - OkBluetooth会根据当前手机终端所连接的音频输出设备(蓝牙耳机/有线耳机/扬声器等)的状态来选择音频设备放音；
 - 可以使用OkBluetooth提供的接口,搭建自己的音频及消息的通信组件；
 
+## 例子 ##
+- [OkBluetooth-Demo](https://github.com/devyok/OkBluetooth/tree/master/okbluetooth_demo)
+
+在demo中参考OkBluetoothAdapter#onAppReady方法中是如何使用OkBluetooth接口的。
+
+- [查看所有蓝牙相关接口](https://github.com/devyok/OkBluetooth/blob/master/okbluetooth/src/main/java/com/devyok/bluetooth/OkBluetooth.java)
 
 ## License ##
 ServiceManager is released under the [Apache 2.0 license](https://github.com/devyok/OkBluetooth/blob/master/LICENSE).
